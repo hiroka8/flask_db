@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    <title>User Management</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>View Users</h1>
+
+        <!-- users|length ~~ this checks if there are records in the variable users (from views.py)  -->
+        {% if users|length < 1 %}
+            <!-- if there are no records... it will display this message -->
+            <h3 class="text-danger">Zero records in table</h3>
+        {% else %}
+            <!-- if there is content/records in user it will execute the code in the ELSE STATEMENT -->
+
+            <!-- code in here displays ALL THE RECORDS in TABLE FORMAT -->
+            <table class="table table-striped">
+                <tr>
+                    <th>ID #</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Number</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                <!-- looping through ALL THE RECORDS from views.py -->
+                {% for user in users %}
+                    <tr>
+                        <!-- displaying of the records one at a time -->
+                        <td>{{user.id}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.address}}</td>
+                        <td>{{user.number}}</td>
+                        <td>
+                            <!-- /delete/{{user.id}} this means that we are going to the delete route -->
+                            <!-- this also means that we are passing the ID of the user  in the -->
+                            <!--  address bar... example http://127.0.0.1:5000/delete/2 -->
+                            <!-- URL means user is redirected to delete route and ID is passed also -->
+                            <a href="/delete/{{user.id}}">Delete</a></td>
+                        <td>
+                            <a href="/update/{{user.id}}">Update</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
